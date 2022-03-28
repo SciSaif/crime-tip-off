@@ -20,7 +20,7 @@ const fe =
 app.use(
   cors({
     credentials: true,
-    origin: fe,
+    origin: "http://localhost:3000",
   })
 );
 
