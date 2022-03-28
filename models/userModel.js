@@ -2,26 +2,29 @@ const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema(
   {
-    designation: {
+    state: {
+      type: String,
+      required: [true, "Please add a state"],
+    },
+    city: {
       type: String,
       required: true,
     },
-    name: {
+    district: {
       type: String,
-      required: [true, "Please add a name"],
+      required: true,
     },
-    email: {
+    psNo: {
       type: String,
-      required: [true, "Please add an email"],
+      required: true,
+    },
+    sho: {
+      type: String,
+      required: true,
     },
     password: {
       type: String,
       required: [true, "Please add a password"],
-    },
-    isAdmin: {
-      type: Boolean,
-      required: true,
-      default: false,
     },
   },
   { timestamps: true }

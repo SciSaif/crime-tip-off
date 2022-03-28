@@ -5,23 +5,19 @@ require("dotenv").config();
 
 const User = require("../models/userModel");
 
-const { cloudinary } = require("../utils/cloudinary");
-
 // @desc Register a user
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-  let { name, email, password, designation } = req.body;
+  let { state, city, district, psNo, sho, password } = req.body;
 
-  if (!name || !email || !password || !designation) {
+  if (!state || !city || !district || !psNo || !sho || !password) {
     res.status(400);
     throw new Error("Please include all fields");
   }
 
-  email = email.toLowerCase();
-
   // Check if user already exists
-  const userExists = await User.findOne({ email: email });
+  const userExists = await User.findOne({ psNo: psNo });
 
   if (userExists) {
     res.status(400);
@@ -34,20 +30,21 @@ const registerUser = asyncHandler(async (req, res) => {
 
   //Create User
   const user = await User.create({
-    name,
-    email,
+    state,
+    city,
+    district,
+    psNo,
+    sho,
     password: hashedPassword,
-    designation,
-    isAdmin: false,
   });
 
   if (user) {
     res.status(200).json({
-      is: user._id,
-      name: user.name,
-      email: user.email,
-      designation: user.designation,
-      isAdmin: user.isAdmin,
+      id: user._id,
+      state: user.state,
+      district: user.district,
+      psNo: user.psNo,
+      sho: user.sho,
     });
   } else {
     res.status(400);
@@ -59,24 +56,24 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route POST /api/users/login
 // @access Public
 const loginUser = asyncHandler(async (req, res) => {
-  let { email, password } = req.body;
+  let { psNo, password } = req.body;
 
-  if (!email || !password) {
+  if (!psNo || !password) {
     res.status(400);
     throw new Error("Please include all fields");
   }
 
-  email = email.toLowerCase();
-
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ psNo: psNo });
 
   // check if user exists and match password
   if (user && (await bcrypt.compare(password, user.password))) {
     res.status(200).json({
       _id: user.id,
-      name: user.name,
-      email: user.email,
-      designation: user.designation,
+      psNo: user.psNo,
+      state: user.state,
+      city: user.city,
+      district: user.district,
+      sho: user.sho,
       token: generateToken(user._id),
     });
   } else {
@@ -95,4 +92,5 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
+  //   adminLogin,
 };

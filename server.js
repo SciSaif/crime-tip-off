@@ -15,7 +15,7 @@ const app = express();
 const fe =
   process.env.NODE_ENV === "production"
     ? "https://crime-tip-off-frontend.vercel.app/"
-    : "http://localhost:5000";
+    : "http://localhost:3000";
 
 app.use(
   cors({
@@ -27,7 +27,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 
-app.use("/api/admin", require("./routes/adminRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/tipoff", require("./routes/tipOffRoutes"));
 
 app.get("/", (req, res) => {
