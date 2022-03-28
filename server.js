@@ -14,7 +14,7 @@ const app = express();
 
 const fe =
   process.env.NODE_ENV === "production"
-    ? "https://crime-tip-off-frontend.vercel.app/"
+    ? "https://crime-tip-off-frontend.vercel.app"
     : "http://localhost:3000";
 
 app.use(
