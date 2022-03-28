@@ -12,7 +12,7 @@ const registerUser = asyncHandler(async (req, res) => {
   let { email, password, aadhar, aadharFile } = req.body;
 
   if (!email || !password || !aadhar || !aadharFile) {
-    res.status(408);
+    res.status(400);
     throw new Error("Please include all fields");
   }
 
