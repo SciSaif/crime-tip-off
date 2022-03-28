@@ -27,7 +27,8 @@ const fe =
 app.use(express.json());
 app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 
-app.use("/api/users", require("./routes/policeRoutes"));
+app.use("/api/police", require("./routes/policeRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/tipoff", require("./routes/tipOffRoutes"));
 
 app.get("/", (req, res) => {
