@@ -15,7 +15,7 @@ const tipOffSchema = mongoose.Schema(
       required: false,
     },
     location: {
-      type: { lat: String, long: String, city: String },
+      type: { loc: String, city: String },
       required: true,
     },
     date: {
