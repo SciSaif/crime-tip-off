@@ -8,6 +8,6 @@ const { route } = require("express/lib/application");
 const router = express.Router();
 
 router.post("/", createTipOff);
-router.post("/all", protect, getAllTipOff);
+router.get("/all", protect, getAllTipOff);
 
 module.exports = router;
