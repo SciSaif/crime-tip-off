@@ -1,6 +1,6 @@
 const express = require("express");
 const { protect } = require("../middlewares/authMiddleware");
-const { loginUser, registerUser } = require("../controllers/userController");
+const { loginUser, registerUser } = require("../controllers/policeController");
 const { route } = require("express/lib/application");
 const router = express.Router();
 

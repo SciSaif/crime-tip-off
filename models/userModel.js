@@ -2,29 +2,17 @@ const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema(
   {
-    state: {
-      type: String,
-      required: [true, "Please add a state"],
-    },
-    city: {
-      type: String,
-      required: true,
-    },
-    district: {
-      type: String,
-      required: true,
-    },
-    psNo: {
-      type: String,
-      required: true,
-    },
-    sho: {
+    email: {
       type: String,
       required: true,
     },
     password: {
       type: String,
-      required: [true, "Please add a password"],
+      required: true,
+    },
+    aadhar: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

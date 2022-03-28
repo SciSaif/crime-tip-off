@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs/dist/bcrypt");
 require("dotenv").config();
 
-const User = require("../models/userModel");
+const User = require("../models/policeModel");
 
 // @desc Register a user
 // @route POST /api/users
