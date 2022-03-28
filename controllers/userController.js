@@ -11,6 +11,8 @@ const User = require("../models/userModel");
 const registerUser = asyncHandler(async (req, res) => {
   let { email, password, aadhar, aadharFile } = req.body;
 
+  console.log(aadharFile);
+
   if (!email || !password || !aadhar || !aadharFile) {
     res.status(400);
     throw new Error("Please include all fields");
@@ -41,7 +43,6 @@ const registerUser = asyncHandler(async (req, res) => {
     aadhar,
     aadharFile,
     verified: true,
-    status: "unresolved",
     password: hashedPassword,
   });
 
@@ -52,7 +53,7 @@ const registerUser = asyncHandler(async (req, res) => {
       aadhar: user.aadhar,
       aadharFile: user.aadharFile,
       verified: user.verified,
-      status: user.status,
+      token: generateToken(user._id),
     });
   } else {
     res.status(400);
@@ -81,7 +82,6 @@ const loginUser = asyncHandler(async (req, res) => {
       aadhar: user.aadhar,
       aadharFile: user.aadharFile,
       verified: user.verified,
-      status: user.status,
       token: generateToken(user._id),
     });
   } else {

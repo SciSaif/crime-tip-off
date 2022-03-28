@@ -18,8 +18,8 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    status: {
-      type: String,
+    verified: {
+      type: Boolean,
       required: true,
     },
   },
