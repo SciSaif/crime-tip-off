@@ -17,14 +17,14 @@ const fe =
     ? "https://crime-tip-off-frontend.vercel.app"
     : "http://localhost:3000";
 
-app.use(
-  cors({
-    credentials: true,
-    origin: "https://crime-tip-off-frontend.vercel.app",
-  })
-);
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: "https://crime-tip-off-frontend.vercel.app",
+//   })
+// );
 
-// app.use(cors());
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false, limit: "50mb" }));
