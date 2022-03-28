@@ -21,7 +21,14 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (userExists) {
     res.status(400);
-    throw new Error("User already exists");
+    throw new Error("An account with this aadhar already exists");
+  }
+  // Check if email already exists
+  const userExistsEmail = await User.findOne({ email: email });
+
+  if (userExistsEmail) {
+    res.status(400);
+    throw new Error("An account with this email already exists");
   }
 
   //Hash Password
@@ -53,35 +60,35 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-// // @desc Login an user
-// // @route POST /api/users/login
-// // @access Public
-// const loginUser = asyncHandler(async (req, res) => {
-//   let { psNo, password } = req.body;
+// @desc Login an user
+// @route POST /api/users/login
+// @access Public
+const loginUser = asyncHandler(async (req, res) => {
+  let { email, password } = req.body;
 
-//   if (!psNo || !password) {
-//     res.status(400);
-//     throw new Error("Please include all fields");
-//   }
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("Please include all fields");
+  }
 
-//   const user = await User.findOne({ psNo: psNo });
+  const user = await User.findOne({ email: email });
 
-//   // check if user exists and match password
-//   if (user && (await bcrypt.compare(password, user.password))) {
-//     res.status(200).json({
-//       _id: user.id,
-//       psNo: user.psNo,
-//       state: user.state,
-//       city: user.city,
-//       district: user.district,
-//       sho: user.sho,
-//       token: generateToken(user._id),
-//     });
-//   } else {
-//     res.status(401);
-//     throw new Error("Invalid Credentials");
-//   }
-// });
+  // check if user exists and match password
+  if (user && (await bcrypt.compare(password, user.password))) {
+    res.status(200).json({
+      _id: user.id,
+      email: user.email,
+      aadhar: user.aadhar,
+      aadharFile: user.aadharFile,
+      verified: user.verified,
+      status: user.status,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid Credentials");
+  }
+});
 
 //Generate token
 const generateToken = (id) => {
@@ -92,6 +99,6 @@ const generateToken = (id) => {
 
 module.exports = {
   registerUser,
-  //   loginUser,
+  loginUser,
   //   adminLogin,
 };

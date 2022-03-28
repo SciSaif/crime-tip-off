@@ -3,12 +3,12 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs/dist/bcrypt");
 require("dotenv").config();
 
-const User = require("../models/policeModel");
+const Police = require("../models/policeModel");
 
-// @desc Register a user
-// @route POST /api/users
+// @desc Register a police
+// @route POST /api/police
 // @access Public
-const registerUser = asyncHandler(async (req, res) => {
+const registerPolice = asyncHandler(async (req, res) => {
   let { state, city, district, psNo, sho, password } = req.body;
 
   if (!state || !city || !district || !psNo || !sho || !password) {
@@ -16,20 +16,20 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("Please include all fields");
   }
 
-  // Check if user already exists
-  const userExists = await User.findOne({ psNo: psNo });
+  // Check if police already exists
+  const policeExists = await Police.findOne({ psNo: psNo });
 
-  if (userExists) {
+  if (policeExists) {
     res.status(400);
-    throw new Error("User already exists");
+    throw new Error("Police already exists");
   }
 
   //Hash Password
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  //Create User
-  const user = await User.create({
+  //Create Police
+  const police = await Police.create({
     state,
     city,
     district,
@@ -38,24 +38,24 @@ const registerUser = asyncHandler(async (req, res) => {
     password: hashedPassword,
   });
 
-  if (user) {
+  if (police) {
     res.status(200).json({
-      id: user._id,
-      state: user.state,
-      district: user.district,
-      psNo: user.psNo,
-      sho: user.sho,
+      id: police._id,
+      state: police.state,
+      district: police.district,
+      psNo: police.psNo,
+      sho: police.sho,
     });
   } else {
     res.status(400);
-    throw new Error("Invalid User Data");
+    throw new Error("Invalid Police Data");
   }
 });
 
-// @desc Login an user
-// @route POST /api/users/login
+// @desc Login a police
+// @route POST /api/police/login
 // @access Public
-const loginUser = asyncHandler(async (req, res) => {
+const loginPolice = asyncHandler(async (req, res) => {
   let { psNo, password } = req.body;
 
   if (!psNo || !password) {
@@ -63,18 +63,18 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error("Please include all fields");
   }
 
-  const user = await User.findOne({ psNo: psNo });
+  const police = await Police.findOne({ psNo: psNo });
 
-  // check if user exists and match password
-  if (user && (await bcrypt.compare(password, user.password))) {
+  // check if police exists and match password
+  if (police && (await bcrypt.compare(password, police.password))) {
     res.status(200).json({
-      _id: user.id,
-      psNo: user.psNo,
-      state: user.state,
-      city: user.city,
-      district: user.district,
-      sho: user.sho,
-      token: generateToken(user._id),
+      _id: police.id,
+      psNo: police.psNo,
+      state: police.state,
+      city: police.city,
+      district: police.district,
+      sho: police.sho,
+      token: generateToken(police._id),
     });
   } else {
     res.status(401);
@@ -90,7 +90,7 @@ const generateToken = (id) => {
 };
 
 module.exports = {
-  registerUser,
-  loginUser,
+  registerPolice,
+  loginPolice,
   //   adminLogin,
 };
