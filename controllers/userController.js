@@ -34,7 +34,7 @@ const registerUser = asyncHandler(async (req, res) => {
     aadhar,
     aadharFile,
     verified: true,
-    status: unresolved,
+    status: "unresolved",
     password: hashedPassword,
   });
 
