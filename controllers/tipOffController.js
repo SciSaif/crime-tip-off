@@ -73,4 +73,4 @@ const getAllTipOff = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getAllTipOff };
+module.exports = { getAllTipOff, createTipOff };
