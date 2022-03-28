@@ -11,7 +11,7 @@ const User = require("../models/userModel");
 const registerUser = asyncHandler(async (req, res) => {
   let { email, password, aadhar, aadharFile } = req.body;
 
-  if (email || password || aadhar || aadharFile) {
+  if (!email || !password || !aadhar || !aadharFile) {
     res.status(400);
     throw new Error("Please include all fields");
   }
